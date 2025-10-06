@@ -51,8 +51,9 @@ public partial class ListaProduto : ContentPage
 
 			lista.Clear();
 
+            lst_Produto.IsRefreshing = true;
 
-			List<Produto> tmp = await App.Db.Search(q);
+            List<Produto> tmp = await App.Db.Search(q);
 
 			tmp.ForEach(i => lista.Add(i));
 		}
@@ -60,7 +61,11 @@ public partial class ListaProduto : ContentPage
 		{
 			await DisplayAlert("OPSS", ex.Message, "OK");
 		}
-		
+        finally
+        {
+			lst_Produto.IsRefreshing = false;
+        }
+
     }
 
     private void ToolbarItem_Clicked_1(object sender, EventArgs e)
@@ -133,5 +138,26 @@ public partial class ListaProduto : ContentPage
         {
             await DisplayAlert("OPSS", ex.Message, "OK");
         }
+    }
+
+    private async void lst_Produto_Refreshing(object sender, EventArgs e)
+    {
+        try
+        {
+            lista.Clear();
+
+            List<Produto> tmp = await App.Db.GettAll(); // buscar lista de produtos
+
+            tmp.ForEach(i => lista.Add(i));
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("OPS", ex.Message, "OK");
+        }
+		finally
+		{
+			lst_Produto.IsRefreshing = false; 
+		}
+
     }
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MinhasComprasMaui.Views.RelatorioPage"
+             Title="Relatório de Compras">
+
+    <Grid RowDefinitions="Auto, *, Auto" Padding="10">
+
+        <VerticalStackLayout Grid.Row="0" Spacing="5" Padding="5">
+            <Label Text="Filtrar por Período" FontAttributes="Bold" FontSize="Title"/>
+
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+
+                <Label Text="De:" VerticalOptions="Center"/>
+                <DatePicker x:Name="dp_DataInicial" 
+                            Date="{Binding DataInicial}" 
+                            Format="dd/MM/yyyy" 
+                            WidthRequest="120"/>
+
+                <Label Text="Até:" VerticalOptions="Center"/>
+                <DatePicker x:Name="dp_DataFinal" 
+                            Date="{Binding DataFinal}" 
+                            Format="dd/MM/yyyy" 
+                            WidthRequest="120"/>
+            </HorizontalStackLayout>
+
+            <Button Text="Aplicar Filtro" 
+                    Clicked="OnFiltrarClicked" 
+                    Margin="0, 10, 0, 0"/>
+        </VerticalStackLayout>
+
+        <ListView Grid.Row="1" 
+                  x:Name="lst_PdtRelatorio" 
+                  ItemsSource="{Binding ProdutosFiltrados}"
+                  Margin="0, 10, 0, 0"
+                  HasUnevenRows="True">
+
+            <ListView.Header>
+                <Grid ColumnDefinitions="*, 80, 80" BackgroundColor="#E0E0E0">
+                    <Label Grid.Column="0" Text="Produto" FontAttributes="Bold" Padding="5"/>
+                    <Label Grid.Column="1" Text="Data" FontAttributes="Bold" HorizontalTextAlignment="Center" Padding="5"/>
+                    <Label Grid.Column="2" Text="Total" FontAttributes="Bold" HorizontalTextAlignment="End" Padding="5"/>
+                </Grid>
+            </ListView.Header>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid ColumnDefinitions="*, 80, 80" Padding="5, 0">
+                            <Label Grid.Column="0" Text="{Binding Descricao}"/>
+                            <Label Grid.Column="1" Text="{Binding DataCadastro, StringFormat='{0:dd/MM/yyyy}'}" HorizontalTextAlignment="Center"/>
+                            <Label Grid.Column="2" Text="{Binding Total, StringFormat='R$ {0:F2}'}" HorizontalTextAlignment="End"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <HorizontalStackLayout Grid.Row="2" HorizontalOptions="End" Padding="5, 10">
+            <Label Text="Total do Período: " FontAttributes="Bold" FontSize="Title"/>
+            <Label x:Name="lbl_Total" FontAttributes="Bold" FontSize="Title" Text="R$ 0,00"/>
+        </HorizontalStackLayout>
+
+    </Grid>
+</ContentPage>

@@ -19,7 +19,17 @@
         <Entry x:Name="txt_qntdd" Keyboard="Numeric"/>
 
         <Label Text="Preço unitário"/>
-        <Entry x:Name="txt_preco" Keyboard="Numeric"/> 
+        <Entry x:Name="txt_preco" Keyboard="Numeric"/>
+
+        <Label Text="Preço (R$)" FontSize="Medium" />
+        <Entry Placeholder="Preço" Text="{Binding Preco}" Keyboard="Numeric" />
+
+        <Label Text="Data de Compra" FontSize="Medium" Margin="0, 10, 0, 0" />
+        <DatePicker 
+            x:Name="dp_dataCompra"
+            Date="{Binding DataCadastro}" 
+             Format="D" />
+        <Button Text="Salvar" Clicked="Button_Clicked" Margin="0, 20, 0, 0" />
 
     </VerticalStackLayout>
 </ContentPage>

@@ -18,6 +18,8 @@ public partial class ListaProduto : ContentPage
     {
 		try
 		{
+			lista.Clear();
+
 			List<Produto> tmp = await App.Db.GettAll(); // buscar lista de produtos
 
 			tmp.ForEach(i => lista.Add(i));
@@ -49,6 +51,7 @@ public partial class ListaProduto : ContentPage
 
 			lista.Clear();
 
+
 			List<Produto> tmp = await App.Db.Search(q);
 
 			tmp.ForEach(i => lista.Add(i));
@@ -69,28 +72,28 @@ public partial class ListaProduto : ContentPage
 		DisplayAlert("Total dos Produtos", msg, "OK"); 
 	}
 
-    private async Task MenuItem_Clicked(object sender, EventArgs e)
-    {
-		try
-		{
-			MenuItem selecionado = sender as MenuItem; 
-
-			Produto p = selecionado.BindingContext as Produto;
-
-			bool confirm = await DisplayAlert("tem certeza?", "Remover produto?", "Sim", "Não");
-
-			if (confirm)
-			{
-				await App.Db.Delete(p.Id); 
-				lista.Remove(p);
-			}
-
-
-		}catch (Exception ex)
-        {
-           await DisplayAlert("OPSS", ex.Message, "OK");
-        }
-    }
+    //private async void MenuItem_Clicked(object sender, EventArgs e)
+    //{
+	//	try
+	//	{
+	//		MenuItem selecionado = sender as MenuItem; 
+	//
+	//		Produto p = selecionado.BindingContext as Produto;
+	//
+	//		bool confirm = await DisplayAlert("tem certeza?", "Remover produto?", "Sim", "Não");
+	//
+	//		if (confirm)
+	//		{
+	//		await App.Db.Delete(p.Id); 
+	//			lista.Remove(p);
+	//		}
+//
+//
+	//	}catch (Exception ex)
+     //   {
+     //     await DisplayAlert("OPSS", ex.Message, "OK");
+     //  }
+    //}
 
     private void lst_Produto_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
@@ -106,6 +109,29 @@ public partial class ListaProduto : ContentPage
 		catch(Exception ex)
 		{
              DisplayAlert("OPSS", ex.Message, "OK");
+        }
+    }
+
+    private async void MenuItem_Clicked_1(object sender, EventArgs e)
+    {
+
+        try
+        {
+            MenuItem selecionado = sender as MenuItem;
+
+            Produto p = selecionado.BindingContext as Produto;
+
+            bool confirm = await DisplayAlert("tem certeza?", "Remover produto?", "Sim", "Não");
+
+            if (confirm)
+            {
+                await App.Db.Delete(p.Id);
+                lista.Remove(p);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("OPSS", ex.Message, "OK");
         }
     }
 }

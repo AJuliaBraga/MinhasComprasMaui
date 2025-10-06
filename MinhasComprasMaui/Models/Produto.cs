@@ -7,7 +7,7 @@ using SQLite;
 
 namespace Minhas_ComprasMAUI.Models
 {
-    internal class Produto
+    public class Produto
     {
         [PrimaryKey, AutoIncrement]
 
@@ -18,5 +18,7 @@ namespace Minhas_ComprasMAUI.Models
         public double Quantidade { get; set; }
 
         public double Preco { get; set; }
+
+        public double Total { get => Quantidade * Preco; } 
     }
 }
